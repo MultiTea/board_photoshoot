@@ -4,19 +4,21 @@ import { useState, useEffect } from 'react';
 import { Event, Slot } from '../types';
 import SlotList from './SlotList';
 
+interface EventData {
+  data: Event[];
+}
+
 export default function DayDetails({ daySlug }: { daySlug: string }) {
   const [event, setEvent] = useState<Event | null>(null);
   const [slots, setSlots] = useState<Slot[]>([]);
   const [currentSlotIndex, setCurrentSlotIndex] = useState<number>(0);
 
   useEffect(() => {
-    // Ici, nous devrions idéalement avoir une API qui permet de récupérer l'événement par daySlug
-    // Pour cet exemple, nous allons simplement récupérer tous les événements et filtrer
     fetch(
       'https://data.fblacklight.org/api/events?filters[id][$in][0]=252&filters[id][$in][1]=253&filters[id][$in][2]=254&filters[id][$in][3]=255&populate=*'
     )
       .then((response) => response.json())
-      .then((data) => {
+      .then((data: EventData) => {
         const matchingEvent = data.data.find((e: Event) => {
           const d = new Date(e.attributes.start_date);
           const eventDaySlug = `${d.toLocaleDateString('fr-FR', {
@@ -31,8 +33,7 @@ export default function DayDetails({ daySlug }: { daySlug: string }) {
           setSlots(allSlots);
           const now = new Date();
           const currentIndex = allSlots.findIndex(
-            // @ts-ignore
-            (slot) => new Date(slot.attributes.end_date) > now
+            (slot: Slot) => new Date(slot.attributes.end_date) > now
           );
           setCurrentSlotIndex(currentIndex >= 0 ? currentIndex : 0);
         }
