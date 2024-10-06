@@ -31,6 +31,7 @@ export default function DayDetails({ daySlug }: { daySlug: string }) {
           setSlots(allSlots);
           const now = new Date();
           const currentIndex = allSlots.findIndex(
+            // @ts-ignore
             (slot) => new Date(slot.attributes.end_date) > now
           );
           setCurrentSlotIndex(currentIndex >= 0 ? currentIndex : 0);
