@@ -104,7 +104,11 @@ export default function DayDetails({ daySlug }: { daySlug: string }) {
   );
 }
 
-function SlotInfo({ slot }: { slot: Slot }) {
+interface SlotInfoProps {
+  slot: Slot;
+}
+
+function SlotInfo({ slot }: SlotInfoProps) {
   return (
     <div className="bg-gray-800 p-4 rounded">
       <p>Début : {new Date(slot.attributes.start_date).toLocaleTimeString()}</p>
