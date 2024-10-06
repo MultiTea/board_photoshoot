@@ -10,6 +10,7 @@ export interface Event {
   };
 }
 
+
 export interface Slot {
   id: number;
   attributes: {
