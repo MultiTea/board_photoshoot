@@ -1,11 +1,15 @@
 import DayDetails from './../components/DayDetails';
 import Breadcrumb from './../components/Breadcrumb';
 import { Event } from './../types';
+import Clock from './../components/Clock';
 
 export default function DayPage({ params }: { params: { daySlug: string } }) {
   return (
     <div className="h-full overflow-hidden">
-      <Breadcrumb />
+      <div className="flex justify-between">
+        <Breadcrumb />
+        <Clock />
+      </div>
       <DayDetails daySlug={params.daySlug} />
     </div>
   );

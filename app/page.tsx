@@ -3,7 +3,7 @@ import Breadcrumb from './components/Breadcrumb';
 
 export default function Home() {
   return (
-    <div>
+    <div className="h-svh">
       <Breadcrumb />
       <h1 className="text-2xl font-bold mb-4">Créneaux de Photoshoot</h1>
       <EventList />

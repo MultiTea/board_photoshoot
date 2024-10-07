@@ -28,7 +28,9 @@ export default function SlotList({
               }`}
               onClick={() => onSlotSelect(slot.id)}
             >
-              {new Date(slot.attributes.start_date).toLocaleTimeString()} -
+              {' '}
+              〔{slot.id}〕
+              {new Date(slot.attributes.start_date).toLocaleTimeString()} ➺ 
               {new Date(slot.attributes.end_date).toLocaleTimeString()}
             </li>
           ))}

@@ -24,7 +24,7 @@ export default function EventList() {
 
   return (
     <div className="flex">
-      {events.map((event) => {
+      {events.map((event, index) => {
         const daySlug = getDaySlug(event.attributes.start_date);
         return (
           <div key={event.id} className="flex">
@@ -32,7 +32,9 @@ export default function EventList() {
               href={`/${daySlug}`}
               className="m-3 p-4 rounded-md border border-cyan-700 hover:bg-blue-600"
             >
-              <h2 className="text-xl font-bold">{event.attributes.name}</h2>
+              <h2 className="text-xl font-bold">
+                {event.attributes.name} #{index + 1}
+              </h2>
               <p>
                 {new Date(event.attributes.start_date).toLocaleDateString()}
               </p>
