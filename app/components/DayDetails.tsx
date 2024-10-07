@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Event, Slot } from '../types';
 import SlotList from './SlotList';
-import Clock from './Clock';
 
 interface EventData {
   data: Event[];
