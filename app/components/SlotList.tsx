@@ -13,8 +13,14 @@ export default function SlotList({
   currentSlotId,
   onSlotSelect,
 }: SlotListProps) {
+  const formatTime = (date: string) => {
+    return new Date(date).toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
   return (
-    <div className="w-1/6 h-full flex flex-col">
+    <div className="h-full flex flex-col flex-grow-1">
       <h2 className="text-xl font-bold mb-4 sticky top-0 z-10 py-2">
         Tous les créneaux
       </h2>
@@ -29,9 +35,8 @@ export default function SlotList({
               onClick={() => onSlotSelect(slot.id)}
             >
               {' '}
-              〔{slot.id}〕
-              {new Date(slot.attributes.start_date).toLocaleTimeString()} ➺ 
-              {new Date(slot.attributes.end_date).toLocaleTimeString()}
+              〔{slot.id}〕{formatTime(slot.attributes.start_date)} ➺ 
+              {formatTime(slot.attributes.end_date)}
             </li>
           ))}
         </ul>

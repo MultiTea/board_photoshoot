@@ -108,15 +108,47 @@ interface SlotInfoProps {
 function SlotInfo({ slot }: SlotInfoProps) {
   const [isCopied, setIsCopied] = useState(false);
 
+  const formatTime = (date: string) => {
+    return new Date(date).toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  const formatGuests = (guests: string | number | null) => {
+    if (guests === null) return '';
+    if (typeof guests === 'number') return guests.toString();
+
+    try {
+      const guestsArray = JSON.parse(guests);
+      return Array.isArray(guestsArray) ? guestsArray.join(', ') : guests;
+    } catch {
+      return guests;
+    }
+  };
+
   const copySlotInfo = () => {
-    const info = `- ${slot.id} | ${
-      slot.attributes.booked_by || 'Non réservé'
-    } - ${slot.attributes.guests || ''} -`;
+    const slotNumber = slot.id;
+    const bookedBy = slot.attributes.booked_by || '';
+    const guests = formatGuests(slot.attributes.guests);
+
+    // Construction de la chaîne avec gestion conditionnelle
+    const parts = [slotNumber, bookedBy];
+
+    if (guests) {
+      parts.push(guests);
+    }
+
+    const info = parts.filter(Boolean).join(' | ');
+
+    // Ajout du tiret final seulement s'il y a du contenu
+    const finalString = info ? `${info} -` : '';
+
     navigator.clipboard
-      .writeText(info)
+      .writeText(finalString)
       .then(() => {
         setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 400);
+        setTimeout(() => setIsCopied(false), 1000);
       })
       .catch((err) => {
         console.error('Erreur lors de la copie : ', err);
@@ -126,13 +158,10 @@ function SlotInfo({ slot }: SlotInfoProps) {
   return (
     <div>
       <div className="bg-gray-800 p-4 rounded">
-        <p>
-          Début : {new Date(slot.attributes.start_date).toLocaleTimeString()}
-        </p>
-        <p>Fin : {new Date(slot.attributes.end_date).toLocaleTimeString()}</p>
+        <p>Début : {formatTime(slot.attributes.start_date)}</p>
+        <p>Fin : {formatTime(slot.attributes.end_date)}</p>
         <p>Réservé par : {slot.attributes.booked_by || 'Non réservé'}</p>
-        <p>Invités : {slot.attributes.guests || 'Aucun'}</p>
-        <p>Check-in : {slot.attributes.checked_in ? 'Oui' : 'Non'}</p>
+        <p>Invités : {formatGuests(slot.attributes.guests)}</p>
       </div>
       <div>
         {' '}

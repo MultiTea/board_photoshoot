@@ -17,7 +17,6 @@ export interface Slot {
     start_date: string;
     end_date: string;
     booked_by: string | null;
-    guests: number | null;
-    checked_in: boolean;
+    guests: string | number | null;
   };
 }
