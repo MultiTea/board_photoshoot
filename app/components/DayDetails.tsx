@@ -139,7 +139,7 @@ function SlotInfo({ slot }: SlotInfoProps) {
       parts.push(guests);
     }
 
-    const info = parts.filter(Boolean).join(' | ');
+    const info = parts.filter(Boolean).join(' • ');
 
     // Ajout du tiret final seulement s'il y a du contenu
     const finalString = info ? `${info} -` : '';
