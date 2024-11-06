@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Event, Slot } from '../types';
 import SlotList from './SlotList';
+import AttendeesGrid from './AttendeesGrid';
+import attendeesData from '../attendees.json';
 
 interface EventData {
   data: Event[];
@@ -101,11 +103,7 @@ export default function DayDetails({ daySlug }: { daySlug: string }) {
   );
 }
 
-interface SlotInfoProps {
-  slot: Slot;
-}
-
-function SlotInfo({ slot }: SlotInfoProps) {
+function SlotInfo({ slot }: { slot: Slot }) {
   const [isCopied, setIsCopied] = useState(false);
 
   const formatTime = (date: string) => {
@@ -115,7 +113,7 @@ function SlotInfo({ slot }: SlotInfoProps) {
     });
   };
 
-  const formatGuests = (guests: string | number | null) => {
+  const formatGuests = (guests: string | number | null): string => {
     if (guests === null) return '';
     if (typeof guests === 'number') return guests.toString();
 
@@ -132,7 +130,6 @@ function SlotInfo({ slot }: SlotInfoProps) {
     const bookedBy = slot.attributes.booked_by || '';
     const guests = formatGuests(slot.attributes.guests);
 
-    // Construction de la chaîne avec gestion conditionnelle
     const parts = [slotNumber, bookedBy];
 
     if (guests) {
@@ -140,8 +137,6 @@ function SlotInfo({ slot }: SlotInfoProps) {
     }
 
     const info = parts.filter(Boolean).join(' • ');
-
-    // Ajout du tiret final seulement s'il y a du contenu
     const finalString = info ? `${info} -` : '';
 
     navigator.clipboard
@@ -156,38 +151,44 @@ function SlotInfo({ slot }: SlotInfoProps) {
   };
 
   return (
-    <div>
-      <div className="bg-gray-800 p-4 rounded">
-        <p>Début : {formatTime(slot.attributes.start_date)}</p>
-        <p>Fin : {formatTime(slot.attributes.end_date)}</p>
-        <p>Réservé par : {slot.attributes.booked_by || 'Non réservé'}</p>
-        <p>Invités : {formatGuests(slot.attributes.guests)}</p>
-      </div>
+    <div className="flex flex-row gap-8">
       <div>
-        {' '}
-        <button
-          onClick={copySlotInfo}
-          className={`mt-2 p-2 text-white rounded focus:outline-none focus:ring-2 focus:ring-green-300 transition-colors duration-150 ${
-            isCopied ? 'bg-blue-500' : 'bg-green-500 hover:bg-green-600'
-          }`}
-          aria-label="Copier les informations"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+        <div className="size-48 bg-gray-800 p-4 rounded">
+          <p>Début : {formatTime(slot.attributes.start_date)}</p>
+          <p>Fin : {formatTime(slot.attributes.end_date)}</p>
+          <p>Réservé par : {slot.attributes.booked_by || 'Non réservé'}</p>
+          <p>Invités : {formatGuests(slot.attributes.guests)}</p>
+        </div>
+        <div className="flex items-center gap-2 mt-2">
+          <button
+            onClick={copySlotInfo}
+            className={`p-2 text-white rounded focus:outline-none focus:ring-2 focus:ring-green-300 transition-colors duration-150 ${
+              isCopied ? 'bg-blue-500' : 'bg-green-500 hover:bg-green-600'
+            }`}
+            aria-label="Copier les informations"
           >
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
       </div>
+      <AttendeesGrid
+        bookedBy={slot.attributes.booked_by}
+        guests={slot.attributes.guests}
+        attendees={attendeesData}
+      />
     </div>
   );
 }
