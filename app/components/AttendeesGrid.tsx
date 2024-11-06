@@ -10,7 +10,7 @@ const AttendeesGrid = ({ bookedBy, guests, attendees }: AttendeesGridProps) => {
     try {
       const parsed = JSON.parse(guests);
       return Array.isArray(parsed) ? parsed.map(Number) : [Number(parsed)];
-    } catch (e) {
+    } catch {
       if (typeof guests === 'string' && guests.includes(',')) {
         return guests
           .split(',')
