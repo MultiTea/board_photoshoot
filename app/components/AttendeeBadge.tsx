@@ -11,10 +11,6 @@ const AttendeeBadge = ({ badge, profileId, username }: AttendeeBadgeProps) => {
   const [imageError, setImageError] = useState(false);
   const [webpFailed, setWebpFailed] = useState(false);
 
-  // Use basePath from next.config.js
-  const basePath =
-    process.env.NODE_ENV === 'production' ? '/board_photoshoot' : '';
-
   const imageSrc = imageError
     ? getAssetPath('/api/placeholder/64/64')
     : webpFailed
