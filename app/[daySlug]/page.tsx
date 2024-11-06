@@ -5,7 +5,7 @@ import Clock from './../components/Clock';
 
 export default function DayPage({ params }: { params: { daySlug: string } }) {
   return (
-    <div className="h-full overflow-hidden">
+    <div className="h-dvh overflow-hidden p-10">
       <div className="flex justify-between">
         <Breadcrumb />
         <Clock />

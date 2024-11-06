@@ -15,6 +15,13 @@ export default function DayDetails({ daySlug }: { daySlug: string }) {
   const [slots, setSlots] = useState<Slot[]>([]);
   const [currentSlotIndex, setCurrentSlotIndex] = useState<number>(0);
 
+  const formatTime = (date: string) => {
+    return new Date(date).toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
   useEffect(() => {
     fetch(
       'https://data.fblacklight.org/api/events?filters[id][$in][0]=252&filters[id][$in][1]=253&filters[id][$in][2]=254&filters[id][$in][3]=255&populate=*'
@@ -66,14 +73,18 @@ export default function DayDetails({ daySlug }: { daySlug: string }) {
   if (!event) return <div className="h-screen">Chargement...</div>;
 
   return (
-    <div className="flex h-[calc(100vh-4.5rem)]">
+    <div className="flex h-full w-full pb-8">
       <SlotList
         slots={slots}
         currentSlotId={currentSlot?.id || null}
         onSlotSelect={handleSlotSelect}
       />
-      <div className="flex-grow p-4 overflow-y-auto">
-        <h1 className="text-2xl font-bold mb-4">{event.attributes.name}</h1>
+      <div className="flex-grow pl-6">
+        <h1 className="text-2xl font-bold mb-4">
+          Créneau n°{currentSlot.id} de{' '}
+          {formatTime(currentSlot.attributes.start_date)} à{' '}
+          {formatTime(currentSlot.attributes.end_date)} :
+        </h1>
         <div className="flex mb-4">
           <button
             onClick={goToPreviousSlot}
@@ -90,14 +101,7 @@ export default function DayDetails({ daySlug }: { daySlug: string }) {
             Suivant
           </button>
         </div>
-        <div className="flex">
-          <div className="px-2">
-            <h2 className="text-xl font-bold m-2">
-              Créneau {currentSlot.id} :
-            </h2>
-            {currentSlot && <SlotInfo slot={currentSlot} />}
-          </div>
-        </div>
+        <div>{currentSlot && <SlotInfo slot={currentSlot} />}</div>
       </div>
     </div>
   );
@@ -137,7 +141,7 @@ function SlotInfo({ slot }: { slot: Slot }) {
     }
 
     const info = parts.filter(Boolean).join(' • ');
-    const finalString = info ? `${info} -` : '';
+    const finalString = info ? `${info}` : '';
 
     navigator.clipboard
       .writeText(finalString)
@@ -151,39 +155,29 @@ function SlotInfo({ slot }: { slot: Slot }) {
   };
 
   return (
-    <div className="flex flex-row gap-8">
-      <div>
-        <div className="size-48 bg-gray-800 p-4 rounded">
-          <p>Début : {formatTime(slot.attributes.start_date)}</p>
-          <p>Fin : {formatTime(slot.attributes.end_date)}</p>
-          <p>Réservé par : {slot.attributes.booked_by || 'Non réservé'}</p>
-          <p>Invités : {formatGuests(slot.attributes.guests)}</p>
-        </div>
-        <div className="flex items-center gap-2 mt-2">
-          <button
-            onClick={copySlotInfo}
-            className={`p-2 text-white rounded focus:outline-none focus:ring-2 focus:ring-green-300 transition-colors duration-150 ${
-              isCopied ? 'bg-blue-500' : 'bg-green-500 hover:bg-green-600'
-            }`}
-            aria-label="Copier les informations"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
+    <div className="flex flex-col gap-8">
+      <button
+        onClick={copySlotInfo}
+        className={`p-2 text-white aspect-square size-10 rounded focus:outline-none focus:ring-2 focus:ring-green-300 transition-colors duration-150 ${
+          isCopied ? 'bg-blue-500' : 'bg-green-500 hover:bg-green-600'
+        }`}
+        aria-label="Copier les informations"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+      </button>
       <AttendeesGrid
         bookedBy={slot.attributes.booked_by}
         guests={slot.attributes.guests}

@@ -23,14 +23,14 @@ export default function EventList() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex gap-8">
       {events.map((event, index) => {
         const daySlug = getDaySlug(event.attributes.start_date);
         return (
           <div key={event.id} className="flex">
             <Link
               href={`/${daySlug}`}
-              className="m-3 p-4 rounded-md border border-cyan-700 hover:bg-blue-600"
+              className="px-4 py-2.5 rounded-md border border-cyan-700 hover:bg-blue-600"
             >
               <h2 className="text-xl font-bold">
                 {event.attributes.name} #{index + 1}

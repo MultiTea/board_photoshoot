@@ -20,22 +20,21 @@ export default function SlotList({
     });
   };
   return (
-    <div className="h-full flex flex-col flex-grow-1">
-      <h2 className="text-xl font-bold mb-4 sticky top-0 z-10 py-2">
-        Tous les créneaux
-      </h2>
-      <div className="overflow-y-auto">
+    <div className="flex flex-col">
+      <h2 className="text-xl font-bold sticky mb-4 px-2">Tous les créneaux</h2>
+      <div className="flex flex-col flex-grow-0 min-w-64 backdrop-brightness-90 rounded-lg overflow-y-auto">
         <ul>
           {slots.map((slot) => (
             <li
               key={slot.id}
               className={`cursor-pointer p-2 ${
-                slot.id === currentSlotId ? 'bg-blue-600' : ''
+                slot.id === currentSlotId ? 'rounded-lg bg-blue-600' : ''
               }`}
               onClick={() => onSlotSelect(slot.id)}
             >
               {' '}
-              〔{slot.id}〕{formatTime(slot.attributes.start_date)} ➺ 
+              <b className="px-2">〔{slot.id}〕</b>
+              {formatTime(slot.attributes.start_date)} ➺ 
               {formatTime(slot.attributes.end_date)}
             </li>
           ))}

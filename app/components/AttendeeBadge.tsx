@@ -26,13 +26,13 @@ const AttendeeBadge = ({ badge, profileId, username }: AttendeeBadgeProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-1 items-center bg-background/50 rounded-lg">
+    <div className="flex flex-col gap-2 items-center bg-background/50 rounded-lg">
       <div className="relative">
         <img
           src={imageSrc}
           onError={handleImageError}
           alt={`Badge ${badge}`}
-          className="size-48 rounded-full object-cover"
+          className="max-w-28 aspect-square rounded-full object-cover"
         />
         <span className="absolute -bottom-2 -right-2 bg-blue-600 text-white text-s px-2 py-0.5 rounded-full">
           #{badge}
