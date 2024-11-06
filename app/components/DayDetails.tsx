@@ -110,13 +110,6 @@ export default function DayDetails({ daySlug }: { daySlug: string }) {
 function SlotInfo({ slot }: { slot: Slot }) {
   const [isCopied, setIsCopied] = useState(false);
 
-  const formatTime = (date: string) => {
-    return new Date(date).toLocaleTimeString('fr-FR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
-
   const formatGuests = (guests: string | number | null): string => {
     if (guests === null) return '';
     if (typeof guests === 'number') return guests.toString();
