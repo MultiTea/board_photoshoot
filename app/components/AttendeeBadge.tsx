@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { AttendeeBadgeProps } from '../types';
 
+const getAssetPath = (path: string) => {
+  const basePath =
+    process.env.NODE_ENV === 'production' ? '/board_photoshoot' : '';
+  return `${basePath}${path}`;
+};
+
 const AttendeeBadge = ({ badge, profileId, username }: AttendeeBadgeProps) => {
   const [imageError, setImageError] = useState(false);
   const [webpFailed, setWebpFailed] = useState(false);
@@ -10,10 +16,10 @@ const AttendeeBadge = ({ badge, profileId, username }: AttendeeBadgeProps) => {
     process.env.NODE_ENV === 'production' ? '/board_photoshoot' : '';
 
   const imageSrc = imageError
-    ? `${basePath}/api/placeholder/64/64`
+    ? getAssetPath('/api/placeholder/64/64')
     : webpFailed
-    ? `${basePath}/badges/${profileId}.png`
-    : `${basePath}/badges/${profileId}.webp`;
+    ? getAssetPath(`/badges/${profileId}.png`)
+    : getAssetPath(`/badges/${profileId}.webp`);
 
   const handleImageError = () => {
     if (!webpFailed) {
