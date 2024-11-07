@@ -40,37 +40,43 @@ const AttendeesGrid = ({ bookedBy, guests, attendees }: AttendeesGridProps) => {
   if (!bookerInfo && guestsList.length === 0) return null;
 
   return (
-    <div className="flex flex-row flex-wrap gap-4 space-4 w-auto h-max overflow-y-auto">
+    <div className="flex flex-row flex-wrap gap-4 space-4 w-auto h-max">
       {/* Booker Section */}
       {bookerInfo && (
-        <div className="grow-0 h-fit px-12 py-4 max-h-auto aspect-square border-2 border-red-500 rounded-lg">
-          <h3 className="text-lg font-semibold mb-2 text-red-500">
-            Réservé par
-          </h3>
-          <div className="flex justify-center">
-            <AttendeeBadge
-              key={bookerInfo.profileId}
-              badge={bookerInfo.badge}
-              profileId={bookerInfo.profileId}
-              username={bookerInfo.username}
-            />
+        <div className="animated-border-red h-fit">
+          <div className="grow-0 h-fit px-12 py-4 max-h-auto aspect-square rounded-lg">
+            <h3 className="text-lg font-semibold mb-2 text-red-500">
+              Réservé par
+            </h3>
+            <div className="flex justify-center">
+              <AttendeeBadge
+                key={bookerInfo.profileId}
+                badge={bookerInfo.badge}
+                profileId={bookerInfo.profileId}
+                username={bookerInfo.username}
+              />
+            </div>
           </div>
         </div>
       )}
 
       {/* Guests Section */}
       {guestsList.length > 0 && (
-        <div className="grow w-max-48 p-4 aspect-auto border-2 border-blue-500 rounded-lg">
-          <h3 className="text-lg font-semibold mb-2 text-blue-500">Invités</h3>
-          <div className="flex flex-row place-content-evenly flex-wrap gap-6">
-            {guestsList.map((guest) => (
-              <AttendeeBadge
-                key={guest.profileId}
-                badge={guest.badge}
-                profileId={guest.profileId}
-                username={guest.username}
-              />
-            ))}
+        <div className="animated-border-blue h-fit mb-10">
+          <div className="w-max-48 p-4 aspect-autorounded-lg">
+            <h3 className="text-lg font-semibold mb-2 text-blue-500">
+              Invités
+            </h3>
+            <div className="flex flex-row place-content-evenly flex-wrap gap-6">
+              {guestsList.map((guest) => (
+                <AttendeeBadge
+                  key={guest.profileId}
+                  badge={guest.badge}
+                  profileId={guest.profileId}
+                  username={guest.username}
+                />
+              ))}
+            </div>
           </div>
         </div>
       )}

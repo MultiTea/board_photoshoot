@@ -73,13 +73,15 @@ export default function DayDetails({ daySlug }: { daySlug: string }) {
   if (!event) return <div className="h-screen">Chargement...</div>;
 
   return (
-    <div className="flex h-full w-full pb-8">
-      <SlotList
-        slots={slots}
-        currentSlotId={currentSlot?.id || null}
-        onSlotSelect={handleSlotSelect}
-      />
-      <div className="flex-grow pl-6">
+    <div className="flex [calc(100dvh-15dvh)]">
+      <div className="h-[calc(100dvh-15dvh)] overflow-y-auto overflow-x-hidden shrink-0 sm:w-1/3 lg:w-2/12">
+        <SlotList
+          slots={slots}
+          currentSlotId={currentSlot?.id || null}
+          onSlotSelect={handleSlotSelect}
+        />
+      </div>
+      <div className="flex-grow pl-6 shrink sm:w-2/3 lg:w-10/12">
         <h1 className="text-2xl font-bold mb-4">
           Créneau n°{currentSlot.id} de{' '}
           {formatTime(currentSlot.attributes.start_date)} à{' '}

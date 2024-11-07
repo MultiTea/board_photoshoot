@@ -9,11 +9,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: linear-gradient(
-      0deg,
-      rgba(41, 35, 44, 1) 0%,
-      rgba(61, 67, 152, 1) 100%
-    );
+    --background: rgb(12, 14, 40);
     --foreground: #ededed;
   }
 }
@@ -30,7 +26,7 @@ body {
   }
 }
 
-/* Styles personnalisés pour le défilement */
+/* Scrollbar Styles */
 .overflow-y-auto {
   scrollbar-width: large;
   scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
@@ -48,4 +44,75 @@ body {
   background-color: rgba(155, 155, 155, 0.5);
   border-radius: 20px;
   border: transparent;
+}
+
+.animated-border-blue {
+  position: relative;
+  padding: 0.15rem;
+  border-radius: 0.75rem;
+  background: transparent;
+}
+
+.animated-border-blue::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 0.15rem solid transparent;
+  border-radius: 0.75rem;
+  border-color: rgba(73, 55, 189, 0.75);
+  background: linear-gradient(var(--gradient-angle), #ffffff00, #ffffff)
+    border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0) border-box;
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0) border-box;
+  mask-composite: exclude;
+  animation: gradient-rotate 4s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+}
+
+.animated-border-red {
+  position: relative;
+  padding: 0.15rem;
+  border-radius: 0.75rem;
+  background: transparent;
+}
+
+.animated-border-red::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 0.15rem solid transparent;
+  border-radius: 0.75rem;
+  border-color: rgba(189, 55, 55, 0.75);
+  background: linear-gradient(var(--gradient-angle), #ffffff00, #ffffff)
+    border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0) border-box;
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0) border-box;
+  mask-composite: exclude;
+  animation: gradient-rotate 4s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+}
+
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes gradient-rotate {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+.animated-border > * {
+  border-radius: 0.5rem;
+  height: 100%;
+  width: 100%;
 }
