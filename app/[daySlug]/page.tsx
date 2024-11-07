@@ -5,12 +5,16 @@ import Clock from './../components/Clock';
 
 export default function DayPage({ params }: { params: { daySlug: string } }) {
   return (
-    <div className="h-dvh px-10">
-      <div className="flex justify-between pt-16">
-        <Breadcrumb />
-        <Clock />
+    <div>
+      <div className="sticky">
+        <div className="flex items-center justify-between place-content-center px-10 py-8">
+          <Breadcrumb />
+          <Clock />
+        </div>
       </div>
-      <DayDetails daySlug={params.daySlug} />
+      <div className="h-[calc(100dvh-25dvh)] px-10">
+        <DayDetails daySlug={params.daySlug} />
+      </div>
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function Breadcrumb() {
     pathname?.split('/').filter((segment) => segment !== '') || [];
 
   return (
-    <nav className="mb-4">
+    <nav>
       <ol className="flex">
         <li>
           <Link href="/" className="text-blue-500 hover:underline">

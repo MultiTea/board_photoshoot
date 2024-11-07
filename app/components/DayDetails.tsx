@@ -73,8 +73,8 @@ export default function DayDetails({ daySlug }: { daySlug: string }) {
   if (!event) return <div className="h-screen">Chargement...</div>;
 
   return (
-    <div className="flex [calc(100dvh-15dvh)]">
-      <div className="h-[calc(100dvh-15dvh)] overflow-y-auto overflow-x-hidden shrink-0 sm:w-1/3 lg:w-2/12">
+    <div className="flex">
+      <div className="h-[calc(100dvh-25dvh)] overflow-y-auto overflow-x-hidden shrink-0 sm:w-1/3 lg:w-2/12">
         <SlotList
           slots={slots}
           currentSlotId={currentSlot?.id || null}

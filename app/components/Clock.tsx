@@ -22,7 +22,7 @@ export default function Clock() {
   }, []);
 
   return (
-    <div className="absolute flex flex-col justify-end top-6 right-6">
+    <div>
       <div className="text-5xl font-light text-left">
         {time.toLocaleTimeString()}
       </div>
